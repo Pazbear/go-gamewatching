@@ -1,0 +1,70 @@
+definitions:
+  main.GameInfo:
+    properties:
+      players:
+        items:
+          $ref: '#/definitions/main.PlayerInfo'
+        type: array
+      type:
+        type: integer
+    type: object
+  main.GameStartReq:
+    properties:
+      game_info:
+        $ref: '#/definitions/main.GameInfo'
+      map_info:
+        $ref: '#/definitions/main.MapInfo'
+      timeout:
+        type: integer
+    type: object
+  main.MapInfo:
+    properties:
+      floor:
+        type: integer
+      horizontal:
+        type: integer
+      locktime:
+        type: integer
+      vertical:
+        type: integer
+    type: object
+  main.PlayerInfo:
+    properties:
+      name:
+        type: string
+      stat:
+        $ref: '#/definitions/main.Stat'
+    type: object
+  main.Stat:
+    properties:
+      int:
+        type: integer
+      pow:
+        type: integer
+      spd:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/api/game/start:
+    post:
+      consumes:
+      - application/json
+      description: 받은 명세서에 알맞게 게임 시작
+      parameters:
+      - description: 게임 명세
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/main.GameStartReq'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Accepted
+      summary: 게임 시작
+      tags:
+      - game
+swagger: "2.0"
